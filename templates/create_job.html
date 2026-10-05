@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Post Job - CareerMatch</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            CareerMatch
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/recruiter/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="form-section">
+
+        <div class="form-card job-form">
+
+            <h1>
+                Post a New Job
+            </h1>
+
+
+            <form method="POST">
+
+                <label>
+                    Job Title
+                </label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Python Developer"
+                    required
+                >
+
+
+                <label>
+                    Company
+                </label>
+
+                <input
+                    type="text"
+                    name="company"
+                    placeholder="Company name"
+                    required
+                >
+
+
+                <label>
+                    Job Description
+                </label>
+
+                <textarea
+                    name="description"
+                    placeholder="Describe the job..."
+                    required
+                ></textarea>
+
+
+                <label>
+                    Required Skills
+                </label>
+
+                <input
+                    type="text"
+                    name="required_skills"
+                    placeholder="Python, Flask, SQL, Git"
+                    required
+                >
+
+
+                <label>
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Bengaluru"
+                    required
+                >
+
+
+                <label>
+                    Salary
+                </label>
+
+                <input
+                    type="text"
+                    name="salary"
+                    placeholder="₹5 - ₹8 LPA"
+                >
+
+
+                <label>
+                    Job Type
+                </label>
+
+                <select name="job_type">
+
+                    <option>
+                        Full Time
+                    </option>
+
+                    <option>
+                        Part Time
+                    </option>
+
+                    <option>
+                        Internship
+                    </option>
+
+                    <option>
+                        Contract
+                    </option>
+
+                </select>
+
+
+                <button type="submit">
+                    Post Job
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

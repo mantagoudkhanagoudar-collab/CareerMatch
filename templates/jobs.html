@@ -1,0 +1,1515 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CareerMatch - Jobs</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .search-box {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.3fr 1.2fr auto auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 18px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .results-header h2 {
+            margin: 0;
+        }
+
+        .recommendation {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 14px 18px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card,
+        .adzuna-job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .job-card:hover,
+        .adzuna-job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-title,
+        .adzuna-job-title {
+            margin: 0 0 7px 0;
+            font-size: 21px;
+            color: #111827;
+        }
+
+        .company,
+        .adzuna-company {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .job-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .salary {
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #374151;
+            margin-top: 15px;
+            margin-bottom: 7px;
+        }
+
+        .skills,
+        .adzuna-description {
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .match-box {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 9px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .match-score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .excellent {
+            color: #059669;
+        }
+
+        .good {
+            color: #2563eb;
+        }
+
+        .partial {
+            color: #d97706;
+        }
+
+        .low {
+            color: #dc2626;
+        }
+
+        .match-label {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .matched {
+            color: #059669;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .missing {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .job-actions,
+        .adzuna-actions {
+            margin-top: 18px;
+        }
+
+        .job-actions .btn,
+        .adzuna-actions .btn {
+            width: 100%;
+        }
+
+        .no-jobs {
+            background: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .no-jobs h2 {
+            margin-bottom: 8px;
+        }
+
+        .no-jobs p {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        /* ==============================
+           ADZUNA
+        ============================== */
+
+        .adzuna-section {
+            margin-top: 50px;
+        }
+
+        .adzuna-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .adzuna-header h2 {
+            margin: 0;
+        }
+
+        .adzuna-header p {
+            margin: 5px 0 0 0;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .adzuna-count {
+            background: #eef2ff;
+            color: #3730a3;
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .adzuna-loading {
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            color: #6b7280;
+        }
+
+        .adzuna-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .adzuna-source {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .adzuna-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .adzuna-pagination button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .adzuna-pagination button:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .adzuna-page {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        @media (max-width: 1000px) {
+
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .navbar a {
+                margin-left: 8px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .results-header,
+            .adzuna-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<nav class="navbar">
+
+    <h2>CareerMatch</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('jobs') }}">Jobs</a>
+
+        <a href="{{ url_for('profile') }}">Profile</a>
+
+        <a href="{{ url_for('applications') }}">Applications</a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>Find Your Perfect Job</h1>
+
+        <p>
+            Discover jobs that match your skills and experience.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <form
+            method="GET"
+            action="{{ url_for('jobs') }}"
+            class="search-form"
+        >
+
+            <div class="form-group">
+
+                <label for="search">
+                    Search Jobs
+                </label>
+
+                <input
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Job title, company, skill..."
+                    value="{{ search or '' }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="location">
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="e.g. Bengaluru"
+                    value="{{ location or '' }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="job_type">
+                    Job Type
+                </label>
+
+                <select
+                    id="job_type"
+                    name="job_type"
+                >
+
+                    <option value="">
+                        Any Job Type
+                    </option>
+
+                    <option
+                        value="Full Time"
+                        {% if job_type == "Full Time" %}selected{% endif %}
+                    >
+                        Full Time
+                    </option>
+
+                    <option
+                        value="Part Time"
+                        {% if job_type == "Part Time" %}selected{% endif %}
+                    >
+                        Part Time
+                    </option>
+
+                    <option
+                        value="Internship"
+                        {% if job_type == "Internship" %}selected{% endif %}
+                    >
+                        Internship
+                    </option>
+
+                    <option
+                        value="Contract"
+                        {% if job_type == "Contract" %}selected{% endif %}
+                    >
+                        Contract
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="min_match">
+                    Minimum Match
+                </label>
+
+                <select
+                    id="min_match"
+                    name="min_match"
+                >
+
+                    <option value="">
+                        Any Match
+                    </option>
+
+                    <option
+                        value="80"
+                        {% if min_match == "80" %}selected{% endif %}
+                    >
+                        80%+
+                    </option>
+
+                    <option
+                        value="60"
+                        {% if min_match == "60" %}selected{% endif %}
+                    >
+                        60%+
+                    </option>
+
+                    <option
+                        value="40"
+                        {% if min_match == "40" %}selected{% endif %}
+                    >
+                        40%+
+                    </option>
+
+                    <option
+                        value="20"
+                        {% if min_match == "20" %}selected{% endif %}
+                    >
+                        20%+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Search
+            </button>
+
+
+            <a
+                href="{{ url_for('jobs') }}"
+                class="btn btn-secondary"
+            >
+                Clear Filters
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- LOCAL CAREERMATCH JOBS -->
+
+    <div class="results-header">
+
+        <h2>
+            🎯 Recommended Jobs
+        </h2>
+
+    </div>
+
+
+    {% if jobs %}
+
+        <div class="recommendation">
+
+            💡
+            These jobs are ranked based on how well your
+            skills match the required skills.
+
+        </div>
+
+
+        <div class="jobs-grid">
+
+            {% for job in jobs %}
+
+                <div class="job-card">
+
+                    <h2 class="job-title">
+                        {{ job["title"] }}
+                    </h2>
+
+
+                    <div class="company">
+                        {{ job["company"] }}
+                    </div>
+
+
+                    <div class="job-info">
+
+                        {% if job["location"] %}
+
+                            <span class="badge">
+                                📍 {{ job["location"] }}
+                            </span>
+
+                        {% endif %}
+
+
+                        {% if job["job_type"] %}
+
+                            <span class="badge">
+                                💼 {{ job["job_type"] }}
+                            </span>
+
+                        {% endif %}
+
+
+                        {% if job["salary"] %}
+
+                            <span class="badge salary">
+                                💰 {{ job["salary"] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if job["description"] %}
+
+                        <div class="section-title">
+                            Description
+                        </div>
+
+                        <div class="skills">
+                            {{ job["description"] }}
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if job["required_skills"] %}
+
+                        <div class="section-title">
+                            Required Skills
+                        </div>
+
+                        <div class="skills">
+                            {{ job["required_skills"] }}
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- MATCH -->
+
+                    <div class="match-box">
+
+                        <div class="match-header">
+
+                            <span class="match-label">
+                                Skill Match
+                            </span>
+
+
+                            {% set score = job["match_score"] %}
+
+
+                            {% if score >= 80 %}
+
+                                <span class="match-score excellent">
+                                    {{ score }}%
+                                </span>
+
+                            {% elif score >= 50 %}
+
+                                <span class="match-score good">
+                                    {{ score }}%
+                                </span>
+
+                            {% elif score > 0 %}
+
+                                <span class="match-score partial">
+                                    {{ score }}%
+                                </span>
+
+                            {% else %}
+
+                                <span class="match-score low">
+                                    {{ score }}%
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if score >= 80 %}
+
+                            <div class="excellent">
+                                ⭐ Excellent Match
+                            </div>
+
+                        {% elif score >= 50 %}
+
+                            <div class="good">
+                                👍 Good Match
+                            </div>
+
+                        {% elif score > 0 %}
+
+                            <div class="partial">
+                                ⚡ Partial Match
+                            </div>
+
+                        {% else %}
+
+                            <div class="low">
+                                ⚠️ Low Match
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if job["matched_skills"] %}
+
+                            <div class="matched">
+
+                                <strong>
+                                    Matched:
+                                </strong>
+
+                                {{ job["matched_skills"]|join(", ") }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if job["missing_skills"] %}
+
+                            <div class="missing">
+
+                                <strong>
+                                    Missing:
+                                </strong>
+
+                                {{ job["missing_skills"]|join(", ") }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="job-actions">
+
+                        <a
+                            href="{{ url_for('job_details', job_id=job['id']) }}"
+                            class="btn btn-primary"
+                        >
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="no-jobs">
+
+            <h2>
+                😔 No Local Jobs Found
+            </h2>
+
+            <p>
+                There are currently no CareerMatch jobs matching your filters.
+            </p>
+
+            <a
+                href="{{ url_for('jobs') }}"
+                class="btn btn-primary"
+            >
+                Show All Jobs
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ==========================================
+         ADZUNA LIVE JOBS
+    =========================================== -->
+
+    <div class="adzuna-section">
+
+        <div class="adzuna-header">
+
+            <div>
+
+                <h2>
+                    🌐 Live Jobs from Adzuna
+                </h2>
+
+                <p>
+                    Live external job opportunities matching your search.
+                </p>
+
+            </div>
+
+
+            <div
+                class="adzuna-count"
+                id="adzunaCount"
+            >
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div id="adzunaError"></div>
+
+
+        <div
+            id="adzunaLoading"
+            class="adzuna-loading"
+        >
+            🔄 Loading live jobs...
+        </div>
+
+
+        <div
+            id="adzunaJobs"
+            class="jobs-grid"
+        ></div>
+
+
+        <div
+            id="adzunaPagination"
+            class="adzuna-pagination"
+            style="display: none;"
+        >
+
+            <button
+                id="adzunaPrevious"
+                onclick="loadAdzunaJobs(currentAdzunaPage - 1)"
+            >
+                ← Previous
+            </button>
+
+
+            <span
+                id="adzunaPage"
+                class="adzuna-page"
+            >
+                Page 1
+            </span>
+
+
+            <button
+                id="adzunaNext"
+                onclick="loadAdzunaJobs(currentAdzunaPage + 1)"
+            >
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let currentAdzunaPage = 1;
+
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    function formatSalary(min, max) {
+
+        if (min && max) {
+
+            return "💰 " +
+                Number(min).toLocaleString() +
+                " - " +
+                Number(max).toLocaleString();
+
+        }
+
+        if (min) {
+
+            return "💰 From " +
+                Number(min).toLocaleString();
+
+        }
+
+        if (max) {
+
+            return "💰 Up to " +
+                Number(max).toLocaleString();
+
+        }
+
+        return "";
+
+    }
+
+
+    function shortenDescription(description) {
+
+        if (!description) {
+            return "";
+        }
+
+        if (description.length <= 250) {
+            return description;
+        }
+
+        return description.substring(0, 250) + "...";
+
+    }
+
+
+    function getMatchClass(score) {
+
+        if (score >= 80) {
+            return "excellent";
+        }
+
+        if (score >= 50) {
+            return "good";
+        }
+
+        if (score > 0) {
+            return "partial";
+        }
+
+        return "low";
+
+    }
+
+
+    function getMatchLabel(score) {
+
+        if (score >= 80) {
+            return "⭐ Excellent Match";
+        }
+
+        if (score >= 50) {
+            return "👍 Good Match";
+        }
+
+        if (score > 0) {
+            return "⚡ Partial Match";
+        }
+
+        return "⚠️ Low Match";
+
+    }
+
+
+    async function loadAdzunaJobs(page = 1) {
+
+        const jobsContainer =
+            document.getElementById(
+                "adzunaJobs"
+            );
+
+        const loading =
+            document.getElementById(
+                "adzunaLoading"
+            );
+
+        const errorBox =
+            document.getElementById(
+                "adzunaError"
+            );
+
+        const countBox =
+            document.getElementById(
+                "adzunaCount"
+            );
+
+        const pagination =
+            document.getElementById(
+                "adzunaPagination"
+            );
+
+        const pageBox =
+            document.getElementById(
+                "adzunaPage"
+            );
+
+        const previousButton =
+            document.getElementById(
+                "adzunaPrevious"
+            );
+
+        const nextButton =
+            document.getElementById(
+                "adzunaNext"
+            );
+
+
+        const searchInput =
+            document.getElementById(
+                "search"
+            );
+
+        const locationInput =
+            document.getElementById(
+                "location"
+            );
+
+
+        let keyword =
+            searchInput.value.trim();
+
+        let location =
+            locationInput.value.trim();
+
+
+        if (!keyword) {
+            keyword = "python";
+        }
+
+
+        loading.style.display = "block";
+
+        errorBox.innerHTML = "";
+
+        jobsContainer.innerHTML = "";
+
+        countBox.textContent = "Loading...";
+
+
+        try {
+
+            const url =
+                "/api/adzuna/jobs?search=" +
+                encodeURIComponent(keyword) +
+                "&location=" +
+                encodeURIComponent(location) +
+                "&page=" +
+                page;
+
+
+            const response =
+                await fetch(url);
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to load Adzuna jobs."
+                );
+
+            }
+
+
+            currentAdzunaPage = page;
+
+
+            countBox.textContent =
+                Number(
+                    data.count || 0
+                ).toLocaleString() +
+                " jobs found";
+
+
+            if (
+                !data.jobs ||
+                data.jobs.length === 0
+            ) {
+
+                jobsContainer.innerHTML = `
+                    <div class="no-jobs">
+                        <h2>😔 No Live Jobs Found</h2>
+                        <p>
+                            Try another keyword or location.
+                        </p>
+                    </div>
+                `;
+
+                pagination.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            data.jobs.forEach(
+                function(job) {
+
+                    const salary =
+                        formatSalary(
+                            job.salary_min,
+                            job.salary_max
+                        );
+
+
+                    const description =
+                        shortenDescription(
+                            job.description
+                        );
+
+
+                    const contract =
+                        job.contract_type
+                            ? "💼 " +
+                              job.contract_type
+                            : "";
+
+
+                    const locationText =
+                        job.location
+                            ? "📍 " +
+                              job.location
+                            : "";
+
+
+                    const score =
+                        Number(
+                            job.match_score || 0
+                        );
+
+
+                    const matchClass =
+                        getMatchClass(
+                            score
+                        );
+
+
+                    const matchLabel =
+                        getMatchLabel(
+                            score
+                        );
+
+
+                    const matched =
+                        job.matched_skills ||
+                        [];
+
+
+                    const missing =
+                        job.missing_skills ||
+                        [];
+
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "adzuna-job-card";
+
+
+                    card.innerHTML = `
+
+                        <h2 class="adzuna-job-title">
+                            ${escapeHtml(
+                                job.title
+                            )}
+                        </h2>
+
+
+                        <div class="adzuna-company">
+                            ${escapeHtml(
+                                job.company ||
+                                "Company not specified"
+                            )}
+                        </div>
+
+
+                        <div class="job-info">
+
+                            ${
+                                locationText
+                                ? `
+                                    <span class="badge">
+                                        ${escapeHtml(
+                                            locationText
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                            }
+
+
+                            ${
+                                contract
+                                ? `
+                                    <span class="badge">
+                                        ${escapeHtml(
+                                            contract
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                            }
+
+
+                            ${
+                                salary
+                                ? `
+                                    <span class="badge salary">
+                                        ${escapeHtml(
+                                            salary
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                            }
+
+                        </div>
+
+
+                        ${
+                            description
+                            ? `
+                                <div class="section-title">
+                                    Description
+                                </div>
+
+                                <div class="adzuna-description">
+                                    ${escapeHtml(
+                                        description
+                                    )}
+                                </div>
+                              `
+                            : ""
+                        }
+
+
+                        <!-- ADZUNA MATCH -->
+
+                        <div class="match-box">
+
+                            <div class="match-header">
+
+                                <span class="match-label">
+                                    Skill Match
+                                </span>
+
+                                <span
+                                    class="match-score ${matchClass}"
+                                >
+                                    ${score}%
+                                </span>
+
+                            </div>
+
+
+                            <div class="${matchClass}">
+                                ${matchLabel}
+                            </div>
+
+
+                            ${
+                                matched.length > 0
+                                ? `
+                                    <div class="matched">
+
+                                        <strong>
+                                            Matched:
+                                        </strong>
+
+                                        ${escapeHtml(
+                                            matched.join(", ")
+                                        )}
+
+                                    </div>
+                                  `
+                                : ""
+                            }
+
+
+                            ${
+                                missing.length > 0
+                                ? `
+                                    <div class="missing">
+
+                                        <strong>
+                                            Missing:
+                                        </strong>
+
+                                        ${escapeHtml(
+                                            missing.join(", ")
+                                        )}
+
+                                    </div>
+                                  `
+                                : ""
+                            }
+
+                        </div>
+
+
+                        <span class="adzuna-source">
+                            🌐 Adzuna Live Job
+                        </span>
+
+
+                        <div class="adzuna-actions">
+
+                            <a
+                                href="${escapeHtml(
+                                    job.redirect_url
+                                )}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary"
+                            >
+                                View Job
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    jobsContainer.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+
+            pagination.style.display =
+                "flex";
+
+
+            pageBox.textContent =
+                "Page " +
+                currentAdzunaPage;
+
+
+            previousButton.disabled =
+                currentAdzunaPage <= 1;
+
+
+            nextButton.disabled =
+                data.jobs.length < 10;
+
+
+        } catch (error) {
+
+            countBox.textContent =
+                "Unavailable";
+
+
+            errorBox.innerHTML = `
+                <div class="adzuna-error">
+                    ⚠️ Unable to load live jobs.
+                    Please try again.
+                </div>
+            `;
+
+
+            pagination.style.display =
+                "none";
+
+
+            console.error(
+                "Adzuna error:",
+                error
+            );
+
+        } finally {
+
+            loading.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            loadAdzunaJobs(1);
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
+

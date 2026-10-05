@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - CareerMatch</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            CareerMatch
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/jobs">
+                Jobs
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="applications-page">
+
+        <h1>
+            My Applications
+        </h1>
+
+        <p>
+            Track the jobs you have applied for.
+        </p>
+
+
+        {% if applications %}
+
+            <div class="application-container">
+
+                {% for application in applications %}
+
+                    <div class="application-card">
+
+                        <h2>
+                            {{ application["title"] }}
+                        </h2>
+
+                        <h3>
+                            {{ application["company"] }}
+                        </h3>
+
+                        <p>
+                            📍 {{ application["location"] }}
+                        </p>
+
+                        <p>
+                            💼 {{ application["job_type"] }}
+                        </p>
+
+
+                        {% if application["salary"] %}
+
+                            <p>
+                                💰 {{ application["salary"] }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <p>
+                            Applied on:
+                            {{ application["applied_at"] }}
+                        </p>
+
+
+                        <div class="application-status">
+
+                            Status:
+
+                            <strong>
+                                {{ application["status"] }}
+                            </strong>
+
+                        </div>
+
+
+                        <a
+                            href="/job/{{ application['job_id'] }}"
+                        >
+
+                            <button>
+                                View Job
+                            </button>
+
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h2>
+                    No Applications Yet
+                </h2>
+
+                <p>
+                    You haven't applied for any jobs.
+                </p>
+
+                <a href="/jobs">
+
+                    <button>
+                        Find Jobs
+                    </button>
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</body>
+
+</html>

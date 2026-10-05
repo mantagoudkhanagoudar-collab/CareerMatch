@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Recruiter Dashboard - CareerMatch
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container mt-5 mb-5">
+
+
+    <!-- HEADER -->
+
+    <div
+        class="d-flex justify-content-between align-items-center mb-4"
+    >
+
+        <div>
+
+            <h1>
+                👔 Recruiter Dashboard
+            </h1>
+
+            <p class="text-muted">
+                Welcome to CareerMatch Recruiter Intelligence.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a
+                href="{{ url_for('create_job') }}"
+                class="btn btn-primary"
+            >
+                ➕ Create Job
+            </a>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="btn btn-outline-danger"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ANALYTICS -->
+
+    <h2 class="mb-3">
+        📊 Hiring Analytics
+    </h2>
+
+
+    <div class="row g-3 mb-4">
+
+
+        <!-- JOBS -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <h2>
+                        💼
+                    </h2>
+
+                    <h2>
+                        {{ total_jobs }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Total Jobs
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPLICANTS -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <h2>
+                        👥
+                    </h2>
+
+                    <h2>
+                        {{ total_applicants }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Total Applicants
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SHORTLISTED -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <h2>
+                        ⭐
+                    </h2>
+
+                    <h2 class="text-success">
+                        {{ shortlisted_count }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Shortlisted
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REJECTED -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <h2>
+                        ❌
+                    </h2>
+
+                    <h2 class="text-danger">
+                        {{ rejected_count }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Rejected
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPLICATION PIPELINE -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h3>
+                📈 Application Pipeline
+            </h3>
+
+            <hr>
+
+
+            <div class="row text-center">
+
+
+                <div class="col-md-4">
+
+                    <h4>
+                        📨 {{ applied_count }}
+                    </h4>
+
+                    <p class="text-muted">
+                        Applied
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <h4 class="text-success">
+                        ⭐ {{ shortlisted_count }}
+                    </h4>
+
+                    <p class="text-muted">
+                        Shortlisted
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <h4 class="text-danger">
+                        ❌ {{ rejected_count }}
+                    </h4>
+
+                    <p class="text-muted">
+                        Rejected
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOP CANDIDATES -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h3>
+                🏆 Top Candidates
+            </h3>
+
+            <p class="text-muted">
+                Candidates ranked using CareerMatch skill matching.
+            </p>
+
+            <hr>
+
+
+            {% if top_candidates %}
+
+                {% for candidate in top_candidates %}
+
+                    <div
+                        class="border rounded p-3 mb-3"
+                    >
+
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+
+                            <div>
+
+                                {% if loop.index == 1 %}
+
+                                    <span
+                                        class="badge bg-warning text-dark"
+                                    >
+                                        🥇 #1
+                                    </span>
+
+                                {% elif loop.index == 2 %}
+
+                                    <span
+                                        class="badge bg-secondary"
+                                    >
+                                        🥈 #2
+                                    </span>
+
+                                {% elif loop.index == 3 %}
+
+                                    <span
+                                        class="badge bg-info text-dark"
+                                    >
+                                        🥉 #3
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="badge bg-light text-dark"
+                                    >
+                                        #{{ loop.index }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                <strong class="ms-2">
+
+                                    {{ candidate["applicant"]["name"] }}
+
+                                </strong>
+
+
+                                <div class="text-muted mt-1">
+
+                                    {{ candidate["applicant"]["title"] }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="text-center">
+
+                                <h4
+                                    class="
+                                    {% if candidate['match_result']['match_score'] >= 80 %}
+                                        text-success
+                                    {% elif candidate['match_result']['match_score'] >= 60 %}
+                                        text-warning
+                                    {% else %}
+                                        text-danger
+                                    {% endif %}
+                                    "
+                                >
+
+                                    {{ candidate["match_result"]["match_score"] }}%
+
+                                </h4>
+
+                                <small>
+                                    Match
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mt-3">
+
+                            <strong>
+                                Matched:
+                            </strong>
+
+                            {% if candidate["match_result"]["matched_skills"] %}
+
+                                {% for skill in candidate["match_result"]["matched_skills"] %}
+
+                                    <span
+                                        class="badge bg-success ms-1"
+                                    >
+                                        {{ skill }}
+                                    </span>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <span class="text-muted">
+                                    None
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if candidate["match_result"]["missing_skills"] %}
+
+                            <div class="mt-2">
+
+                                <strong>
+                                    Missing:
+                                </strong>
+
+                                {% for skill in candidate["match_result"]["missing_skills"] %}
+
+                                    <span
+                                        class="badge bg-danger ms-1"
+                                    >
+                                        {{ skill }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <p class="text-muted">
+                    No candidates yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- RECENT APPLICANTS -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h3>
+                📨 Recent Applicants
+            </h3>
+
+            <hr>
+
+
+            {% if recent_applicants %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Candidate
+                                </th>
+
+                                <th>
+                                    Job
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Applied
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for applicant in recent_applicants %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <strong>
+                                            {{ applicant["name"] }}
+                                        </strong>
+
+                                        <br>
+
+                                        <small class="text-muted">
+                                            {{ applicant["email"] }}
+                                        </small>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ applicant["title"] }}
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if applicant["status"] == "Shortlisted" %}
+
+                                            <span
+                                                class="badge bg-success"
+                                            >
+                                                ⭐ Shortlisted
+                                            </span>
+
+                                        {% elif applicant["status"] == "Rejected" %}
+
+                                            <span
+                                                class="badge bg-danger"
+                                            >
+                                                ❌ Rejected
+                                            </span>
+
+                                        {% else %}
+
+                                            <span
+                                                class="badge bg-primary"
+                                            >
+                                                📨 Applied
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <small>
+                                            {{ applicant["applied_at"] }}
+                                        </small>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <a
+                                            href="{{ url_for(
+                                                'applicants',
+                                                job_id=applicant['job_id']
+                                            ) }}"
+                                            class="btn btn-sm btn-outline-primary"
+                                        >
+                                            View Candidates
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    No applications yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- MY JOBS -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div
+                class="d-flex justify-content-between align-items-center"
+            >
+
+                <h3>
+                    💼 My Jobs
+                </h3>
+
+                <a
+                    href="{{ url_for('create_job') }}"
+                    class="btn btn-primary"
+                >
+                    ➕ Create Job
+                </a>
+
+            </div>
+
+            <hr>
+
+
+            {% if jobs %}
+
+                {% for job in jobs %}
+
+                    <div
+                        class="border rounded p-3 mb-3"
+                    >
+
+                        <div
+                            class="d-flex justify-content-between"
+                        >
+
+                            <div>
+
+                                <h4>
+                                    {{ job["title"] }}
+                                </h4>
+
+                                <p class="text-muted">
+
+                                    🏢 {{ job["company"] }}
+
+                                    ·
+
+                                    📍 {{ job["location"] }}
+
+                                    ·
+
+                                    💼 {{ job["job_type"] }}
+
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <a
+                                    href="{{ url_for(
+                                        'applicants',
+                                        job_id=job['id']
+                                    ) }}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    👥 Applicants
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'delete_job',
+                                        job_id=job['id']
+                                    ) }}"
+                                    style="display:inline;"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger"
+                                        onclick="return confirm(
+                                            'Delete this job?'
+                                        );"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <div class="text-center py-4">
+
+                    <h4>
+                        📭 No Jobs Created
+                    </h4>
+
+                    <p class="text-muted">
+                        Create your first job posting.
+                    </p>
+
+                    <a
+                        href="{{ url_for('create_job') }}"
+                        class="btn btn-primary"
+                    >
+                        ➕ Create Job
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

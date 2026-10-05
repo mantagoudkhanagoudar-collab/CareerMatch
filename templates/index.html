@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareerMatch</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            CareerMatch
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/jobs">
+                Jobs
+            </a>
+
+            {% if session.get("user_id") %}
+
+                {% if session.get("role") == "recruiter" %}
+
+                    <a href="/recruiter/dashboard">
+                        Recruiter Dashboard
+                    </a>
+
+                {% else %}
+
+                    <a href="/dashboard">
+                        Dashboard
+                    </a>
+
+                {% endif %}
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="/login">
+                    Login
+                </a>
+
+                <a href="/register">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Find the Right Job
+                <br>
+                for Your Skills
+            </h1>
+
+            <p>
+                CareerMatch connects job seekers with
+                opportunities based on their skills,
+                experience and career goals.
+            </p>
+
+            <a href="/jobs">
+
+                <button>
+                    Explore Jobs
+                </button>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="jobs">
+
+        <h2>
+            Latest Jobs
+        </h2>
+
+        <p class="section-description">
+            Explore the latest opportunities.
+        </p>
+
+
+        <div class="job-container">
+
+            {% if jobs %}
+
+                {% for job in jobs %}
+
+                    <div class="job-card">
+
+                        <h3>
+                            {{ job["title"] }}
+                        </h3>
+
+                        <h4>
+                            {{ job["company"] }}
+                        </h4>
+
+                        <p>
+                            {{ job["description"] }}
+                        </p>
+
+                        <p>
+                            📍 {{ job["location"] }}
+                        </p>
+
+
+                        <a
+                            href="/job/{{ job['id'] }}"
+                        >
+
+                            <button>
+                                View Job
+                            </button>
+
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No jobs posted yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>
+            © 2026 CareerMatch. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

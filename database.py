@@ -1,7 +1,10 @@
 import sqlite3
+import os
 
 
-DATABASE = "careermatch.db"
+# Always use the database file inside the CareerMatch project folder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, "careermatch.db")
 
 
 def get_db_connection():
@@ -140,10 +143,8 @@ def create_database():
     connection.close()
 
 
-if __name__ == "__main__":
+# ==================================================
+# CREATE DATABASE WHEN THE APPLICATION STARTS
+# ==================================================
 
-    create_database()
-
-    print(
-        "Database created successfully!"
-    )
+create_database()
